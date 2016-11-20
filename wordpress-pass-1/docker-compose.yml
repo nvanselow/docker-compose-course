@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+
+  wordpress:
+    image: wordpress:4.5
+    depends_on:
+      - mysql
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    restart: always
+
+  mysql:
+    image: mariadb:10.1
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - "./volumes/db:/var/lib/mysql"
+    restart: always
